@@ -29,39 +29,42 @@
             <table class="table table-bordered">
                 <tr class="info">
                     <td>
-                        <strong>ID: {{ $question->id }} - {{ $question->question }}</strong>
-{{--                        <a class="btn btn-xs btn-warning" href="{{ route('questions.edit', $question->id) }}"><i class="glyphicon glyphicon-edit"></i> Edit</a>--}}
-                        <br>
-                        <strong class="heading">Answers:</strong>
-                        <a class="btn btn-success btn-xs" href="{{ route('outbound_bot_answers.create', [$outbound_bot->id, $question->id]) }}">
-                            <i class="glyphicon glyphicon-plus"></i> Add Answer
-                        </a>
+                        <div>
+                            <strong>Question:</strong> {{ $question->question }}
+                        </div>
+                        <strong>Answers:</strong>
                         <table class="table table-bordered table-condensed">
                             <tr>
                                 <th>Trigger</th>
                                 <th>Text</th>
                                 <th>Next Question</th>
-                                <th>&nbsp;</th>
+                                <th>
+                                    <a class="btn btn-success btn-xs" href="{{ route('outbound_bot_answers.create', [$outbound_bot->id, $question->id]) }}">
+                                        <i class="glyphicon glyphicon-plus"></i> Create Answer
+                                    </a>
+                                </th>
                             </tr>
                             @foreach($question->answers as $answer)
                                 <tr>
                                     <td class="ten-percent">
                                         {{ $answer->trigger }}
                                     </td>
-                                    <td class="forty-percent">
+                                    <td class="thirty-percent">
                                         {{ $answer->answer }}
                                     </td>
-                                    <td class="forty-percent">
+                                    <td class="thirty-percent">
                                         {{ $answer->next_question_id ? \App\Question::find($answer->next_question_id)->question : 'none' }}
                                     </td>
-                                    <td class="ten-percent">
-                                        <a class="btn btn-xs btn-warning" href="{{ route('answers.edit', $answer->id) }}"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+                                    <td class="fifteen-percent">
+                                        <a class="btn btn-xs btn-warning" href="{{ route('answers.edit', $answer->id) }}">
+                                            <i class="glyphicon glyphicon-edit"></i> Edit
+                                        </a>
                                         <form action="{{ route('answers.destroy', $answer->id) }}" method="POST" style="display: inline;" onsubmit="if(confirm('Delete? Are you sure?')) { return true } else {return false };">
                                             <input type="hidden" name="_method" value="DELETE">
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                             <button type="submit" class="btn btn-xs btn-danger"><i class="glyphicon glyphicon-trash"></i> Delete</button>
                                         </form>
-                                    </td>
+                                    </td class="fifteen-percent">
                                 </tr>
                             @endforeach
                         </table>
@@ -78,11 +81,14 @@
         .ten-percent {
             width: 10%
         }
-        .forty-percent {
-            width: 40%;
+        .thirty-percent {
+            width: 30%;
+        }
+        .fifteen-percent {
+            width: 15%;
         }
         .heading {
-            font-size: 20px;
+            font-size: 15px;
         }
         .sending {
             display: none;

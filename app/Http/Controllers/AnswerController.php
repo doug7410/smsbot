@@ -12,18 +12,6 @@ use Twilio\Rest\Client;
 class AnswerController extends Controller {
 
 	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		$answers = Answer::orderBy('id', 'desc')->paginate(10);
-
-		return view('answers.index', compact('answers'));
-	}
-
-	/**
 	 * Show the form for creating a new resource.
 	 *
 	 * @return Response
@@ -60,19 +48,6 @@ class AnswerController extends Controller {
 	}
 
 	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		$answer = Answer::findOrFail($id);
-
-		return view('answers.show', compact('answer'));
-	}
-
-	/**
 	 * Show the form for editing the specified resource.
 	 *
 	 * @param  int  $id
@@ -81,8 +56,15 @@ class AnswerController extends Controller {
 	public function edit($id)
 	{
 		$answer = Answer::findOrFail($id);
+        $bot = OutboundBot::findOrFail($answer->bot_id);
+        $question = Question::findOrFail($answer->question_id);
+        $relatedQuestions = Question::where([
+            ['bot_id', '=', $answer->bot_id],
+            ['id', '!=', $answer->question_id]
+        ])->get()->push((object) ['id' => null, 'question' => 'none']);
 
-		return view('answers.edit', compact('answer'));
+
+		return view('answers.edit', compact('answer', 'bot', 'question', 'relatedQuestions'));
 	}
 
 	/**

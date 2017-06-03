@@ -31,7 +31,7 @@
                     </div>
                 <div class="well well-sm">
                     <button type="submit" class="btn btn-primary">Create</button>
-                    <a class="btn btn-link pull-right" href="{{ route('questions.index') }}"><i class="glyphicon glyphicon-backward"></i> Back</a>
+                    <a class="btn btn-link pull-right" href="{{ route('outbound_bots.show', $bot->id) }}"><i class="glyphicon glyphicon-backward"></i> Back</a>
                 </div>
             </form>
 

@@ -10,18 +10,6 @@ use Illuminate\Http\Request;
 class QuestionController extends Controller {
 
 	/**
-	 * Display a listing of the resource.
-	 *
-	 * @return Response
-	 */
-	public function index()
-	{
-		$questions = Question::orderBy('id', 'desc')->paginate(10);
-
-		return view('questions.index', compact('questions'));
-	}
-
-	/**
 	 * Show the form for creating a new resource.
 	 *
 	 * @return Response
@@ -48,19 +36,6 @@ class QuestionController extends Controller {
 		$question->save();
 
 		return redirect()->route('outbound_bots.show', $question->bot_id)->with('message', 'Item created successfully.');
-	}
-
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
-	public function show($id)
-	{
-		$question = Question::findOrFail($id);
-
-		return view('questions.show', compact('question'));
 	}
 
 	/**
