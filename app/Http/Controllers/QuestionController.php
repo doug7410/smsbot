@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\OutboundBot;
 use App\Question;
 use Illuminate\Http\Request;
 
@@ -25,9 +26,10 @@ class QuestionController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function create()
+	public function create($botId)
 	{
-		return view('questions.create');
+	    $bot = OutboundBot::findOrFail($botId);
+		return view('questions.create', ['bot' => $bot]);
 	}
 
 	/**

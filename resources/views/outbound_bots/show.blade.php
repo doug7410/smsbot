@@ -22,16 +22,20 @@
     <div class="row">
         <div class="col-md-12">
             <strong class="heading">Questions and Answers</strong>
-            <a class="btn btn-success pull-right" href="{{ route('questions.create') }}"><i class="glyphicon glyphicon-plus"></i> Add a Question</a>
+            <a class="btn btn-success pull-right" href="{{ route('outbound_bot_questions.create', $outbound_bot->id) }}">
+                <i class="glyphicon glyphicon-plus"></i> Add a Question
+            </a>
             @foreach($questions as $question)
             <table class="table table-bordered">
                 <tr class="info">
                     <td>
                         <strong>ID: {{ $question->id }} - {{ $question->question }}</strong>
-                        <a class="btn btn-xs btn-warning" href="{{ route('questions.edit', $question->id) }}"><i class="glyphicon glyphicon-edit"></i> Edit</a>
+{{--                        <a class="btn btn-xs btn-warning" href="{{ route('questions.edit', $question->id) }}"><i class="glyphicon glyphicon-edit"></i> Edit</a>--}}
                         <br>
                         <strong class="heading">Answers:</strong>
-                        <a class="btn btn-success btn-xs" href="{{ route('answers.create') }}"><i class="glyphicon glyphicon-plus"></i> Add Answer</a>
+                        <a class="btn btn-success btn-xs" href="{{ route('outbound_bot_answers.create', [$outbound_bot->id, $question->id]) }}">
+                            <i class="glyphicon glyphicon-plus"></i> Add Answer
+                        </a>
                         <table class="table table-bordered table-condensed">
                             <tr>
                                 <th>Trigger</th>

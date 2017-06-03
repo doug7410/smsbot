@@ -13,17 +13,15 @@
 
     <div class="row">
         <div class="col-md-12">
-
+            <div>
+                <label for="">Bot Name: </label>
+                <span>{{ $bot->name }}</span>
+            </div>
             <form action="{{ route('questions.store') }}" method="POST">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                 <div class="form-group @if($errors->has('bot_id')) has-error @endif">
-                       <label for="bot_id-field">Bot_id</label>
-                    <input type="text" id="bot_id-field" name="bot_id" class="form-control" value="{{ old("bot_id") }}"/>
-                       @if($errors->has("bot_id"))
-                        <span class="help-block">{{ $errors->first("bot_id") }}</span>
-                       @endif
-                    </div>
+                    <input type="hidden" id="bot_id-field" name="bot_id" class="form-control" value="{{ $bot->id }}"/>
                     <div class="form-group @if($errors->has('question')) has-error @endif">
                        <label for="question-field">Question</label>
                     <input type="text" id="question-field" name="question" class="form-control" value="{{ old("question") }}"/>

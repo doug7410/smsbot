@@ -13,24 +13,18 @@
 
     <div class="row">
         <div class="col-md-12">
-
+            <div>
+                <label for="">Bot Name: </label>
+                <span>{{ $bot->name }}</span>
+            </div>
+            <div>
+                <label for="">Question: </label>
+                <span>{{ $question->question }}</span>
+            </div>
             <form action="{{ route('answers.store') }}" method="POST">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">
-
-                <div class="form-group @if($errors->has('bot_id')) has-error @endif">
-                       <label for="bot_id-field">Bot_id</label>
-                    <input type="text" id="bot_id-field" name="bot_id" class="form-control" value="{{ old("bot_id") }}"/>
-                       @if($errors->has("bot_id"))
-                        <span class="help-block">{{ $errors->first("bot_id") }}</span>
-                       @endif
-                    </div>
-                    <div class="form-group @if($errors->has('question_id')) has-error @endif">
-                       <label for="question_id-field">Question_id</label>
-                    <input type="text" id="question_id-field" name="question_id" class="form-control" value="{{ old("question_id") }}"/>
-                       @if($errors->has("question_id"))
-                        <span class="help-block">{{ $errors->first("question_id") }}</span>
-                       @endif
-                    </div>
+                    <input type="hidden" id="bot_id-field" name="bot_id" class="form-control" value="{{ $bot->id }}"/>
+                    <input type="hidden" id="question_id-field" name="question_id" class="form-control" value="{{ $question->id }}"/>
                     <div class="form-group @if($errors->has('trigger')) has-error @endif">
                        <label for="trigger-field">Trigger</label>
                     <input type="text" id="trigger-field" name="trigger" class="form-control" value="{{ old("trigger") }}"/>
@@ -45,12 +39,15 @@
                         <span class="help-block">{{ $errors->first("answer") }}</span>
                        @endif
                     </div>
-                    <div class="form-group @if($errors->has('next_question_id')) has-error @endif">
-                       <label for="next_question_id-field">Next_question_id</label>
-                    <input type="text" id="next_question_id-field" name="next_question_id" class="form-control" value="{{ old("next_question_id") }}"/>
-                       @if($errors->has("next_question_id"))
-                        <span class="help-block">{{ $errors->first("next_question_id") }}</span>
-                       @endif
+                    <div class="form-group">
+                        <label for="next_question_id-field">Next Question</label>
+                        <div>
+                            <select name="next_question_id" id="">
+                            @foreach($relatedQuestions as $relatedQuestion)
+                                <option value="{{ $relatedQuestion->id }}">{{ $relatedQuestion->question }}</option>
+                            @endforeach
+                            </select>
+                        </div>
                     </div>
                 <div class="well well-sm">
                     <button type="submit" class="btn btn-primary">Create</button>

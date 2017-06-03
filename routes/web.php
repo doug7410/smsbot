@@ -17,3 +17,7 @@ Route::resource("customer_lists","CustomerListController");
 Route::resource("questions","QuestionController");
 Route::resource("answers","AnswerController");
 Route::resource("conversations","ConversationController");
+Route::get('outbound_bot/{bot_id}/questions', "QuestionController@create")
+    ->name('outbound_bot_questions.create');
+Route::get('outbound_bot/{bot_id}/question/{question_id}/answer', "AnswerController@create")
+    ->name('outbound_bot_answers.create');

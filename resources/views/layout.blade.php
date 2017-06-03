@@ -43,8 +43,6 @@
                 <ul class="nav navbar-nav">
                     <li><a href="/">Outbound Bots</a></li>
                     <li><a href="/customer_lists">Customer List</a></li>
-                    <li><a href="/questions">Questions</a></li>
-                    <li><a href="/answers">Answers</a></li>
                     <li><a href="/conversations">Conversations</a></li>
                 </ul>
             </div><!--/.nav-collapse -->

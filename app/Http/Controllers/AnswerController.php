@@ -28,9 +28,15 @@ class AnswerController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function create()
+	public function create($botID, $questionID)
 	{
-		return view('answers.create');
+        $bot = OutboundBot::findOrFail($botID);
+        $question = Question::findOrFail($questionID);
+        $relatedQuestions = Question::where([
+            ['bot_id', '=', $botID],
+            ['id', '!=', $questionID]
+        ])->get()->push((object) ['id' => null, 'question' => 'none']);
+		return view('answers.create', compact('bot', 'question', 'relatedQuestions'));
 	}
 
 	/**
