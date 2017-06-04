@@ -35,16 +35,23 @@ class AnswerController extends Controller {
 	 */
 	public function store(Request $request)
 	{
-		$answer = new Answer();
-		$answer->bot_id = $request->input("bot_id");
-        $answer->question_id = $request->input("question_id");
-        $answer->trigger = $request->input("trigger");
-        $answer->answer = $request->input("answer");
-        $answer->next_question_id = $request->input("next_question_id") ?: null;
+		$answer = Answer::create([
+		    'bot_id'            => $request->input("bot_id"),
+            'question_id'       => $request->input("question_id"),
+            'trigger'           => $request->input("trigger"),
+            'answer'            => $request->input("answer"),
+            'next_question_id'  => $request->input("next_question_id") ?: null
+        ]);
 
-		$answer->save();
-
-		return redirect()->route('outbound_bots.show', $answer->bot_id)->with('message', 'Item created successfully.');
+		if($request->input('new_question')) {
+		    $question = Question::create([
+		        'question' => $request->input('new_question'),
+                'bot_id' => $request->input('bot_id')
+            ]);
+		    $answer->next_question_id = $question->id;
+		    $answer->save();
+        }
+		return redirect()->route('outbound_bots.show', $answer->bot_id);
 	}
 
 	/**

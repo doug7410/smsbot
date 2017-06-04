@@ -13,7 +13,14 @@
 
     <div class="row">
         <div class="col-md-12">
-
+            <div>
+                <label for="">Bot Name: </label>
+                <span>{{ $bot->name }}</span>
+            </div>
+            <div>
+                <label for="">Question: </label>
+                <span>{{ $question->question }}</span>
+            </div>
             <form action="{{ route('answers.update', $answer->id) }}" method="POST">
                 <input type="hidden" name="_method" value="PUT">
                 <input type="hidden" name="_token" value="{{ csrf_token() }}">

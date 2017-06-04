@@ -28,14 +28,22 @@ class QuestionController extends Controller {
 	 */
 	public function store(Request $request)
 	{
-		$question = new Question();
+		$question = Question::create([
+		    'bot_id' => $request->input("bot_id"),
+            'question' => $request->input("question")
+        ]);
 
-		$question->bot_id = $request->input("bot_id");
-        $question->question = $request->input("question");
+        $bot = OutboundBot::findOrFail($request->input("bot_id"));
+        $relatedQuestions = Question::where([
+            ['bot_id', '=', $request->input("bot_id")],
+            ['id', '!=', $question->id]
+        ])->get()->push((object) ['id' => null, 'question' => 'none']);
 
-		$question->save();
+        if ($request->input('add_answer')) {
+            return view('answers.create', compact('bot', 'question', 'relatedQuestions'));
+        }
 
-		return redirect()->route('outbound_bots.show', $question->bot_id)->with('message', 'Item created successfully.');
+        return redirect()->route('outbound_bots.show', $question->bot_id);
 	}
 
 	/**

@@ -47,21 +47,41 @@
                                 <option value="{{ $relatedQuestion->id }}">{{ $relatedQuestion->question }}</option>
                             @endforeach
                             </select>
+                            <p class="or">
+                            <strong>OR</strong>
+                            </p>
+                            <div class="form-group">
+                                <label for="answer-field">Add a New Question</label>
+                                <input type="text" name="new_question" class="form-control"/>
+                            </div>
                         </div>
                     </div>
                 <div class="well well-sm">
-                    <button type="submit" class="btn btn-primary">Create</button>
+                    <button type="submit" class="btn btn-primary" id="add-answer">Create</button>
                     <a class="btn btn-link pull-right" href="{{ route('outbound_bots.show', $bot->id) }}"><i class="glyphicon glyphicon-backward"></i> Back</a>
                 </div>
             </form>
 
         </div>
     </div>
+    <style>
+        .or{
+            margin: 10px;
+        }
+    </style>
 @endsection
 @section('scripts')
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
   <script>
-    $('.date-picker').datepicker({
+    $('#add-answer-and-question').click(function (e) {
+      e.preventDefault();
+      $('input[name=add_question]').val('1');
+      $('form').submit()
+    });
+
+    $('#add-answer').click(function (e) {
+      e.preventDefault();
+      $('input[name=add_question]').val('0');
+      $('form').submit()
     });
   </script>
 @endsection

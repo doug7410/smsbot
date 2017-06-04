@@ -30,18 +30,28 @@
                        @endif
                     </div>
                 <div class="well well-sm">
-                    <button type="submit" class="btn btn-primary">Create</button>
+                    <button type="submit" class="btn btn-primary" id="add-question">Create</button>
+                    <button type="submit" class="btn btn-info" id="add-question-and-answer">Create and add an Answer</button>
+                    <input type="hidden" name="add_answer">
                     <a class="btn btn-link pull-right" href="{{ route('outbound_bots.show', $bot->id) }}"><i class="glyphicon glyphicon-backward"></i> Back</a>
                 </div>
+                </div>
             </form>
-
         </div>
     </div>
 @endsection
 @section('scripts')
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.0/js/bootstrap-datepicker.min.js"></script>
   <script>
-    $('.date-picker').datepicker({
+    $('#add-question-and-answer').click(function (e) {
+      e.preventDefault();
+      $('input[name=add_answer]').val('1');
+      $('form').submit()
+    });
+
+    $('#add-question').click(function (e) {
+      e.preventDefault();
+      $('input[name=add_answer]').val('0');
+      $('form').submit()
     });
   </script>
 @endsection
